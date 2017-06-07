@@ -44,3 +44,5 @@ else
 }
 
 /*D:\php5\php.exe D:\Scripts\TC1\X9\DoApp\DoApp.php5*/
+This is the txt file I am reading: \\tc1-d-fil-01.digusva2.loc\assets\TC1\X9\StoryExports\X9\5B19E4A8-4B87-4883-96D7-9C9DC11D5BC3.txt
+This is where want to pass those values.. \\tc1-d-fil-01.digusva2.loc\Templates\TC1\X9\templates\scripts\appPushNotification.php5
