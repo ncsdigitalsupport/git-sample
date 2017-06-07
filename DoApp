@@ -1,0 +1,46 @@
+<?php
+date_default_timezone_set('America/New_York');
+
+include '\\TC1-d-fil-01.digusva2.loc\Templates\TC1\X9\templates\scripts\appPushNotification.php5';
+
+$dirpath ='\\\\TC1-d-fil-01.digusva2.loc\\assets\\TC1\\X9\\StoryExports\\X9';
+
+/* Removes the '..' and '.' from the scandir */
+$files_in_directory = array_diff(scandir($dirpath,1),array('..', '.'));
+$items_count = count($files_in_directory);
+if ($items_count < 1 )
+{
+	echo("...no items to push" . "\n");
+}
+else 
+{
+	echo("..items to push '" . $items_count . "'" . "\n");
+	for ($x=0 ;$x < $items_count ;$x++)
+	{
+		 //Get sitecode, guid, pubtaxo 
+		 $args = file_get_contents($dirpath.'\\'.$files_in_directory[$x]);
+		 //removes extra spaces from pubtaxo
+		 $args1 = str_replace(' ','',$args);
+		 //turns any collection of one or more spaces into just one space
+		 $args2 = preg_replace('/\s+/',' ',$args1);
+		 //echo($args1."\n"); Testing output
+		 $args3 = explode(' ',$args2);
+		 print_r($args3);
+		 
+		 //call php script   
+		 //include '\\TC1-d-fil-01.digusva2.loc\Templates\TC1\X9\templates\scripts\appPushNotification.php5';
+		 //pushnotification('pass all three parameters');
+		 
+		  $curl = curl_init();
+		  curl_setopt($curl, CURLOPT_POST, 1);
+		  curl_setopt($curl, CURLOPT_URL, 'http://tc1-x9web.newscyclecloud.com/apps/pbcs.dll/exec?name=appPushNotification.php5'); 
+		  curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); 
+		  curl_setopt($curl, CURLOPT_POSTFIELDS, $args3);
+		  $result = curl_exec($curl);
+		  curl_close($curl);
+		  echo $result;
+	  
+	}
+}
+
+/*D:\php5\php.exe D:\Scripts\TC1\X9\DoApp\DoApp.php5*/
